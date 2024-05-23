@@ -17,11 +17,20 @@ Recipes.init(
         },
         description: {
             type: DataTypes.STRING,
+            allowNull: false,
         },
         date_created: {
             type: DataTypes.STRING,
             allowNull: false,
             defaultValue: DataTypes.NOW,
+        },
+        ingredients: {
+            type: DataTypes.STRING,
+            allowNull: false,
+        },
+        directions: {
+            type: DataTypes.STRING,
+            allowNull: false,
         },
         has_nuts: {
             type: DataTypes.BOOLEAN
