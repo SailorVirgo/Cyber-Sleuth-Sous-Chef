@@ -14,6 +14,7 @@ Recipes.init(
         name: {
           type: DataTypes.STRING,
           allowNull: false,
+          unique: true,
         },
         description: {
             type: DataTypes.STRING,
@@ -24,12 +25,8 @@ Recipes.init(
             allowNull: false,
             defaultValue: DataTypes.NOW,
         },
-        ingredients: {
-            type: DataTypes.STRING,
-            allowNull: false,
-        },
-        directions: {
-            type: DataTypes.STRING,
+        instructions: {
+            type: DataTypes.ARRAY(DataTypes.TEXT),
             allowNull: false,
         },
         has_nuts: {
