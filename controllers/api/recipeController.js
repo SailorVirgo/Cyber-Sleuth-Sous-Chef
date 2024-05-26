@@ -1,4 +1,4 @@
-const { Recipes } = require("../../models");
+const { Recipes, Ingredients } = require("../../models");
 const multer = require("multer");
 const path = require("path");
 
@@ -55,15 +55,15 @@ exports.createRecipe = (req, res) => {
         .json({ message: "File upload failed", error: err });
     }
 
-    const { name, description, ingredients, directions, has_nuts } = req.body;
+    const { name, description, instructions, has_nuts } = req.body;
 
     try {
       await Recipes.create({
         name,
         description,
         date_created: new Data(),
-        ingredients,
-        directions,
+
+        instructions: instructions.slip("\n"),
         has_nuts: has_nuts === "true",
         user_id: req.user.id,
         imagePath: req.file ? `/updoads/${req.file.filename}` : null,
