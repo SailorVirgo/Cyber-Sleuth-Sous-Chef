@@ -40,7 +40,10 @@ function checkFileType(file, cb) {
 
 exports.getRecipes = async (req, res) => {
   try {
-    const recipes = await Recipes.findAll({ where: { user_id: req.user.id } });
+    const recipes = await Recipes.findAll({
+      where: { user_id: req.user.id },
+      include: [Ingredients],
+    });
     res.json({ recipes });
   } catch (error) {
     res.status(500).json({ message: "Failed to retrieve recipes", error });
@@ -62,7 +65,6 @@ exports.createRecipe = (req, res) => {
         name,
         description,
         date_created: new Data(),
-
         instructions: instructions.slip("\n"),
         has_nuts: has_nuts === "true",
         user_id: req.user.id,
