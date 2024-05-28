@@ -32,7 +32,7 @@ User.init(
             type: DataTypes.STRING,
             allowNull: false,
             validate: {
-                lens: [8],
+                len: [8],
             },
         },
     },
@@ -49,7 +49,7 @@ User.init(
         },
         sequelize,
         timestamps: false,
-        freezeTableName: true,
+        freezeTableName: false,
         underscored: true,
         modelName: 'user'
     }
