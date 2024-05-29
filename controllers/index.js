@@ -1,13 +1,15 @@
-const express = require('express');
-const router = express.Router();
+const homeController = require("./homeController");
+const homeRoutes = require("./homeRoutes");
+const authController = require("./api/authController");
+const authRoutes = require("./api/authRoutes");
+const recipeController = require("./api/recipeController");
+const recipeRoutes = require("./api/recipeRoutes");
 
-router.get('/', (req, res) => {
-    res.render('homepage');
-})
-
-router.get('/homepage', (req, res) => {
-    console.log(req.session);
-    res.render('homepage',{user:req.session.passport.user})
-})
-
-module.exports = router;
+module.exports = {
+  homeController,
+  homeRoutes,
+  authController,
+  authRoutes,
+  recipeController,
+  recipeRoutes,
+};
