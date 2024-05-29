@@ -1,4 +1,3 @@
-// const passport = require('passport')
 const { User } = require("../../models");
 
 exports.register = async (req, res) => {
@@ -20,12 +19,6 @@ exports.register = async (req, res) => {
     res.status(400).json({ message: "User resgistration failed", error });
   }
 };
-
-/* exports.login = passport.authenticate('local', {
-sucessRedirect: '/recipes',
-failureRedirect: 'login',
-failureFlash: true
-}); */
 
 exports.logout = (req, res) => {
   req.logout((err) => {
