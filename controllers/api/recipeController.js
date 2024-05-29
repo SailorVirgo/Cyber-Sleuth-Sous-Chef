@@ -65,7 +65,7 @@ exports.createRecipe = (req, res) => {
         name,
         description,
         date_created: new Data(),
-        instructions: instructions.slip("\n"),
+        instructions: instructions.slipt("\n"),
         has_nuts: has_nuts === "true",
         user_id: req.user.id,
         imagePath: req.file ? `/updoads/${req.file.filename}` : null,
