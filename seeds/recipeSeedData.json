@@ -1,0 +1,16 @@
+[
+    {
+    "name": "Asparagus-Stuffed Chicken Breast",
+    "description": "Boneless chicken breast are stuffed with a mixture of asparagus, cream cheese, and Parmesan, then baked until tender and juicy: Serves 4",
+    "instructions": "1) Preheat oven to 425°F. 2) On a cutting board, cut the chicken breast in half, lengthwise, leaving it intact on one side. 3) Season the inside of the chicken with salt and pepper. 4) Sprinkle the lemon zest on the interrior of the chicken, Top with piece of provolone and three stalks of asparagus, then fold the chicken over enclosing the filling. 5) Season the outside of the chicken breast with salt pepper garlic powder and paprika. 6) Heat a large oven-safe skillet over medium-high heat and add the oil Add the chicken to the pan and cook for 3 to 5 minutes, util golden brown. 7) Flip the chicken over and cook for an additional 3 to 5 minutes. 8) Cover the skillet with aluminum foil and place in the oven for 15 minutes, or until the internal temperature reaches 155°F. 9) Remove the skillet and let sit, covered, for 5 minutes. 10) Remove the foil, and serve.",
+    "has_nuts": "false",
+    "user_id": 2
+    },
+    {
+        "name": "Poppy Seed Chicken",
+        "description": "Creamy chicken casserole: Serves 8",
+        "instructions": "1) Preheat oven to 350°F. 2) Place cubed chicken in a 9X13 casserole dish. 3) Stir together the condensed soup and sour cream, Pour over the chiken. 4) In a seperate bowl, stir together the crushed creackers and melted butter, Sprinkle over the chicken and sauce, Sprinkle the poppy seeds on top. 5) Bake for 20-30 minutes in the preheated oven, until the etop of the casserole is browned and the sauce is bubbly, Serve plain or over rice.",
+        "has_nuts": "false",
+        "user_id": 3
+    }
+]

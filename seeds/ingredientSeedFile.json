@@ -1,0 +1,106 @@
+[
+    {
+        "name": "Chicken breast",
+        "amount": "3",
+        "details": "bonesless skinless",
+        "recipes_id": 1
+    },
+    {
+        "name": "salt",
+        "amount": "tbd",
+        "details": "to taste",
+        "recipes_id": 1
+
+    },
+    {
+        "name": "pepper",
+        "amount": "tbd",
+        "details": "to taste",
+        "recipes_id": 1
+
+    },
+    {
+        "name": "lemon",
+        "amount": "1 tablespoon",
+        "details": "zested",
+        "recipes_id": 1
+
+    },
+    {
+        "name": "asparagus",
+        "amount": "9",
+        "details": "ends trimmed",
+        "recipes_id": 1
+
+    },
+    {
+        "name": "provolone",
+        "amount": "3",
+        "details": "sliced",
+        "recipes_id": 1
+
+    },
+    {
+        "name": "garlic",
+        "amount": "1 teaspoon",
+        "details": "powder",
+        "recipes_id": 1
+
+    },
+    {
+        "name": "paprika",
+        "amount": "1 teaspoon",
+        "details": "null",
+        "recipes_id": 1
+
+    },
+    {
+        "name": "olive oil",
+        "amount": "1 teaspoon",
+        "details": "null",
+        "recipes_id": 1
+
+    },
+    {
+            "name": "Chicken breast",
+            "amount": "5 cups",
+            "details": "cooked and cubed (or shredded)",
+        "recipes_id": 2
+
+        },
+        {
+            "name": "Sour cream",
+            "amount": "1 cup",
+            "details": "null",
+        "recipes_id": 2
+
+        },
+        {
+            "name": "Condensed cream of chicken soup",
+            "amount": "2(10.75 oz cans)",
+            "details": "null",
+        "recipes_id": 2
+
+        },
+        {
+            "name": "Ritz crackers",
+            "amount": "2 cups",
+            "details": "crushed",
+        "recipes_id": 2
+
+        },
+        {
+            "name": "butter",
+            "amount": "1/2 cup",
+            "details": "melted",
+        "recipes_id": 2
+
+        },
+        {
+            "name": "Poppy seed",
+            "amount": "1 tablespoon",
+            "details": "null",
+        "recipes_id": 2
+
+        }
+    ]
