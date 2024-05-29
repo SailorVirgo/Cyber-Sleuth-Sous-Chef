@@ -15,9 +15,9 @@ Ingredients.init(
         },
         details: {
             type: DataTypes.STRING,
-            allowNull: false,
+            allowNull: true,
         },
-        recipe_id: {
+        recipes_id: {
             type: DataTypes.INTEGER,
             allowNull: false,
             references: {
