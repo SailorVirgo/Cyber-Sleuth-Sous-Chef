@@ -1,0 +1,32 @@
+[
+    { 
+        "name": "Maddie",
+        "email": "maddie@gmail.com",
+        "password": "p@ssw0rd"
+    },
+    {
+        "name": "Travis",
+        "email": "travis@gmail.com",
+        "password": "p@ssw0rd"
+    },
+    {
+        "name": "Brenda",
+        "email": "Brenda@gmail.com",
+        "password": "p@ssw0rd"
+    },
+    {
+        "name": "Eric",
+        "email": "Eric@gmail.com",
+        "password": "p@ssw0rd"
+    },
+    {
+        "name": "Eyan",
+        "email": "Eyan@gmail.com",
+        "password": "p@ssw0rd"
+    },
+    {
+        "name": "Guillermo",
+        "email": "Guillermo@gmail.com",
+        "password": "p@ssw0rd"
+    }
+]

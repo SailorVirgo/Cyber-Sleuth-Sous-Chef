@@ -1,21 +1,47 @@
-//  Dependencies
-const express = require('express');
-const exphbs = require('express-handlebars');
 const path = require('path');
-const hbs = exphbs.create({});
+const express = require('express');
+const session = require('express-session');
+const exphbs = require('express-handlebars');
+const routes = require('./controllers');
+const route = require('./controllers/homeRoutes');
+const sequelize = require('./config/connections');
+const SequelizeStore = require('connect-session-sequelize')(session.Store);
+// const passport = require('passport');
+const passport = require('./config/passport');
 
-// ? Sets up the Express App
 const app = express();
 const PORT = process.env.PORT || 3001;
 
-// TODO: Describe what the following two lines of code are doing.
+const hbs = exphbs.create({});
+
+const store = new SequelizeStore({
+    db: sequelize
+})
+
+const sess = {
+    secret: 'secret password',
+    cookies: {
+        maxAge: 1000 * 60 * 60 * 24,
+    },
+    resave: false,
+    saveUninitialized: true,
+    store: store
+};
+//passport middleware
+app.use(session(sess));
+app.use(passport.initialize());
+
+
 app.engine('handlebars', hbs.engine);
 app.set('view engine', 'handlebars');
 
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, 'public')));
-app.use(require('./controllers/dish-routes'));
 
-// ? Starts the server to begin listening
-app.listen(PORT, () => {
-  console.log('Server listening on: http://localhost:' + PORT);
+app.use(routes);
+app.use(route);
+
+sequelize.sync({ force: false }).then(() => {
+    app.listen(PORT, () => console.log('Now listening'));
 });
