@@ -1,33 +1,16 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>{{title}} - Recipe Website</title>
-    <link rel="stylesheet" href="/public/css/index.css">
-</head>
-<body>
-    <header>
-        <h1>{{title}}</h1>
-    </header>
-    
-    <main>
-        <h2>Ingredients</h2>
+{{#extend "main"}}
+    {{#content "body"}}
+        <h2>{{recipe.title}}</h2>
+        <h3>Ingredients</h3>
         <ul>
-            {{#each ingredients}}
+            {{#each recipe.ingredients}}
             <li>{{this}}</li>
             {{/each}}
         </ul>
         
-        <h2>Instructions</h2>
-        <p>{{instructions}}</p>
+        <h3>Instructions</h3>
+        <p>{{recipe.instructions}}</p>
         
         <a href="/">Back to Home</a>
-    </main>
-    
-    <footer>
-        <p>&copy; 2024 Recipe Website</p>
-    </footer>
-    
-    <script src="/js/recipe.js"></script>
-</body>
-</html>
+    {{/content}}
+{{/extend}}
