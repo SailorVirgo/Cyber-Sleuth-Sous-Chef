@@ -1,34 +1,53 @@
-<!-- This template includes hardcoded data. In future lessons, you will be rendering data dynamically. -->
-<div class="menu-container">
-  <div class="card-header col-md-10">
-    <h2>
-      &#127869 Current Menu
-    </h2>
-  </div>
-    <div>
-      <ol>
-        <li>
-          French Bread with Brie Cheese
-        </li>
-        <li>
-          Cheese Plate with Spanish Chorizo
-        </li>
-        <li>
-          Fish Tacos
-        </li>
-        <li>
-          Tropical Fruit Salad
-        </li>
-        <li>
-          Pork Gyoza
-        </li>
-        <li>
-          Yebeg Tibs with Injera Bread
-        </li>
-        <li>
-          Cape Malay Curry
-        </li>
-      </ol>
-    </div>
-  </div>
-</div>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Recipe Website</title>
+    <link rel="stylesheet" href="/css/index.css">
+</head>
+<body>
+    <header>
+        <h1>Welcome to the Recipe Website</h1>
+    </header>
+    
+    <main>
+        <section id="auth-section">
+            <div id="login-container">
+                <h2>Login</h2>
+                <form id="login-form">
+                    <label for="login-username">Username:</label>
+                    <input type="text" id="login-username" name="username" required>
+                    <label for="login-password">Password:</label>
+                    <input type="password" id="login-password" name="password" required>
+                    <button type="submit">Login</button>
+                </form>
+            </div>
+            <div id="register-container">
+                <h2>Register</h2>
+                <form id="register-form">
+                    <label for="register-username">Username:</label>
+                    <input type="text" id="register-username" name="username" required>
+                    <label for="register-password">Password:</label>
+                    <input type="password" id="register-password" name="password" required>
+                    <button type="submit">Register</button>
+                </form>
+            </div>
+        </section>
+        
+        <section id="recipes-section">
+            <h2>Recipes</h2>
+            {{#each recipes}}
+            <div class="recipe">
+                <h3>{{title}}</h3>
+                <p>{{description}}</p>
+                <a href="/recipes/{{id}}">View Recipe</a>
+            </div>
+            {{/each}}
+        </section>
+    </main>
+    
+    <footer>
+        <p>&copy; 2024 Recipe Website</p>
+    </footer>
+</body>
+</html>
