@@ -18,3 +18,5 @@ Recipes.hasMany(Ingredients, {
 Ingredients.belongsTo(Recipes, {
     foreignKey: 'recipes_id'
 })
+
+module.exports = {User, Recipes, Ingredients};
