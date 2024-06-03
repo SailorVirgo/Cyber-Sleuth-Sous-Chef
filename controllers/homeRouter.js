@@ -59,4 +59,25 @@ router.get("/login", (req, res) => {
   res.render("login");
 });
 
+// Register route
+router.get("/register", (req, res) => {
+  // If the user is already logged in, redirect the request to the dashboard
+  if (req.session.logged_in) {
+    res.redirect("/dashboard");
+    return;
+  }
+
+  res.render("register");
+});
+
+// Logout route
+router.get("/logout", (req, res) => {
+  req.logout((err) => {
+    if (err) {
+      return res.status(500).json({ message: "Logout failed", error: err });
+    }
+    res.redirect("/login");
+  });
+});
+
 module.exports = router;
