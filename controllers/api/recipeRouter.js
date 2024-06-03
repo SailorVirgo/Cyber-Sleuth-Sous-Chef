@@ -50,6 +50,24 @@ router.get("/", async (req, res) => {
   }
 });
 
+router.get('/:id', async (req, res) => {
+  // find one category by its `id` value
+  // be sure to include its associated Products
+  try{
+    const recipeData = await Recipes.findByPk(req.params.id, {
+      include: [{model: Ingredients}],
+    });
+
+    const recipe = recipeData.get({plain: true})
+
+    res.render('recipe', {
+      recipe,
+    });
+  }catch(err) {
+    res.status(500).json(err);
+  }
+});
+
 // Create a new recipe
 router.post("/", (req, res) => {
   upload(req, res, async (err) => {

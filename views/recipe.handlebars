@@ -1,10 +1,9 @@
-{{#extend "main"}}
-    {{#content "body"}}
+
         <h2>{{recipe.title}}</h2>
         <h3>Ingredients</h3>
         <ul>
-            {{#each recipe.ingredients}}
-            <li>{{this}}</li>
+            {{#each recipe.ingredients as |ingredient|}}
+            <li>{{ingredient.amount}} {{ingredient.name}} {{ingredient.details}}</li>
             {{/each}}
         </ul>
         
@@ -12,5 +11,3 @@
         <p>{{recipe.instructions}}</p>
         
         <a href="/">Back to Home</a>
-    {{/content}}
-{{/extend}}
