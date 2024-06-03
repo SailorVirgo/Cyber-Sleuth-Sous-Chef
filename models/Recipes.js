@@ -26,7 +26,7 @@ Recipes.init(
             defaultValue: DataTypes.NOW,
         },
         instructions: {
-            type: DataTypes.ARRAY(DataTypes.TEXT),
+            type: DataTypes.TEXT,
             allowNull: false,
         },
         has_nuts: {

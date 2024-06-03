@@ -101,6 +101,161 @@
             "amount": "1 tablespoon",
             "details": "null",
         "recipes_id": 2
-
+        },
+        {
+            "name": "unsalted butter",
+            "amount": "2 tablespoons",
+            "details": "null",
+            "recipes_id": 3
+        },
+        {
+            "name": "russet potatoes",
+            "amount": "4 medium(about 2 pounds)",
+            "details": "null",
+            "recipes_id": 3
+        },
+        {
+            "name": "heavy cream",
+            "amount": "1 1/2 cups",
+            "details": "null",
+            "recipes_id": 3
+        },
+        {
+            "name": "whole milk",
+            "amount": "1/2",
+            "details": "null",
+            "recipes_id": 2
+        },
+        {
+            "name": "garlic",
+            "amount": "2",
+            "details": "cloves minced",
+            "recipes_id": 3
+        },
+        {
+            "name": "thyme leaves",
+            "amount": "1/2 teaspoon",
+            "details": "fresh",
+            "recipes_id": 3
+        },
+        {
+            "name": "kosher salt and pepper",
+            "amount": "to taste",
+            "details": "null",
+            "recipes_id": 3
+        },
+        {
+            "name": "nutmeg",
+            "amount": "pinch",
+            "details": "freshly grated",
+            "recipes_id": 3
+        },
+        {
+            "name": "Gruyere",
+            "amount": "1 cup ",
+            "details": "shredded",
+            "recipes_id": 3
+        },
+        {
+            "name": "parmesan",
+            "amount": "1/2 cup",
+            "details": "finely grated",
+            "recipes_id": 3
+        },
+        {
+            "name": "olive oil",
+            "amount": "2 tablespoons",
+            "details": "null",
+            "recipes_id": 4
+        },
+        {
+            "name": "water",
+            "amount": "1 tablespoon",
+            "details": "null",
+            "recipes_id": 4
+        },
+        {
+            "name": "lemon",
+            "amount": "1 tablespoon",
+            "details": "zested",
+            "recipes_id": 4
+        },
+        {
+            "name": "lemon juice",
+            "amount": "1 tablespoon",
+            "details": "freshly squeezed",
+            "recipes_id": 4
+        },
+        {
+            "name": "garlic",
+            "amount": "2 cloves",
+            "details": "minced",
+            "recipes_id": 4
+        },
+        {
+            "name": "coriander",
+            "amount": "2 teaspoons",
+            "details": "ground",
+            "recipes_id": 4
+        },
+        {
+            "name": "sweet paprika",
+            "amount": "2 teaspoons",
+            "details": "null",
+            "recipes_id": 4
+        },
+        {
+            "name": "cumin",
+            "amount": "2 teaspoons",
+            "details": "ground",
+            "recipes_id": 4
+        },
+        {
+            "name": "turmeric",
+            "amount": "1 teaspoon",
+            "details": "ground",
+            "recipes_id": 4
+        },
+        {
+            "name": "cinnamon",
+            "amount": "1/2 teaspoon",
+            "details": "ground",
+            "recipes_id": 4
+        },
+        {
+            "name": "ginger",
+            "amount": "1/2 teaspoon",
+            "details": "ground",
+            "recipes_id": 4
+        },
+        {
+            "name": "cayenne pepper",
+            "amount": "1/4 teaspoon",
+            "details": "null",
+            "recipes_id": 4
+        },
+        {
+            "name": "cardamom",
+            "amount": "1/4 teaspoon",
+            "details": "ground",
+            "recipes_id": 4
+        },
+        {
+            "name": "kosher salt and ground pepper",
+            "amount": "to taste",
+            "details": "null",
+            "recipes_id": 4
+        },
+        {
+            "name": "chicken thighs",
+            "amount": "2 pounds",
+            "details": "boneless and skinless",
+            "recipes_id": 4
+        },
+        {
+            "name": "canola oil",
+            "amount": "1 1/2 tablespoons",
+            "details": "null",
+            "recipes_id": 4
         }
     ]
