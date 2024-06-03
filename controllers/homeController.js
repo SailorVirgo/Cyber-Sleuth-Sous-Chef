@@ -1,5 +1,5 @@
 exports.getHome = (req, res) => {
-  res.render("home", { user: req.user });
+  res.render("homepage", { user: req.user });
 };
 
 exports.getDashboard = (req, res) => {

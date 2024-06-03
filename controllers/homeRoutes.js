@@ -10,4 +10,5 @@ router.get("/", homeController.getHome);
 router.get("/dashboard", ensureAuthenticated, homeController.getDashboard);
 
 
+
 module.exports = router;
