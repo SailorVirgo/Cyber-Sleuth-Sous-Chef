@@ -29,24 +29,16 @@ router.get("/", async (req, res) => {
 
 router.post('/dashboard', async (req,res) => {
   try {
-      const recipeData = await Recipes.findAll({
-          where : {
-              user_id: req.session.user_id,
-          },
-          include: [
-              {
-                  model: User,
-                  attributes: ['name'],
-              },
-          ],
-      });
+    const userData = await User.findAll({
+      attributes: { exclude: ["password"] },
+      include: [{ model: Recipes }],
+    });
 
-      const recipePost = recipeData.map((post) => post.get({ plain: true }))
+    const user = userData.map((user) => user.get({ plain: true }));
 
-      res.render('dashboard', {
-          recipes,
-          logged_in: req.session.logged_in
-      })
+    res.render("dashboard", {
+      ...user,
+    });
   } catch (err) {
       res.status(500).json(err);
   }
