@@ -4,12 +4,14 @@ const sequelize = require("../config/connections");
 class Recipes extends Model {}
 
 Recipes.init(
+
   {
     id: {
       type: DataTypes.INTEGER,
       allowNull: false,
       primaryKey: true,
       autoIncrement: true,
+
     },
     name: {
       type: DataTypes.STRING,
