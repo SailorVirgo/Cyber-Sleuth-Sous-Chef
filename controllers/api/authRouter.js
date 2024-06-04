@@ -2,6 +2,7 @@ const express = require("express");
 const { User } = require("../../models");
 const passport = require("passport");
 const router = express.Router();
+const passport = require("passport");
 
 // Register route
 router.post("/register", async (req, res) => {
@@ -10,10 +11,16 @@ router.post("/register", async (req, res) => {
   console.log("Received registration data:", req.body);
 
   try {
-    const existingUser = await User.findOne({ where: { email } });
-    console.log("line 13:", existingUser);
-    if (existingUser) {
-      return res.status(400).json({ message: "Email already in use" });
+    const user = await User.findOne({ where: { email } });
+    console.log("line 13:", user);
+    if (user) {
+      return res.render("register");
+    } else {
+      const userData = await User.create(req.body);
+      console.log("line 19:", userData);
+
+      res.render("/home");
+      req.session.save;
     }
 
     const newUser = await User.create({ name: username, email, password });
@@ -21,12 +28,10 @@ router.post("/register", async (req, res) => {
 
     req.login(newUser, (err) => {
       if (err) {
-        return res
-          .status(500)
-          .json({
-            message: "Registration successful, but login failed",
-            error: err,
-          });
+        return res.status(500).json({
+          message: "Registration successful, but login failed",
+          error: err,
+        });
       }
       res.status(200).json({ message: "Registration and login successful" });
     });
@@ -36,31 +41,47 @@ router.post("/register", async (req, res) => {
   }
 });
 
-// Login route
-router.post("/login", (req, res, next) => {
-  passport.authenticate("local", (err, user, info) => {
-    if (err) {
-      return res
-        .status(500)
-        .json({
-          message: "An error occurred during authentication",
-          error: err,
-        });
-    }
-    if (!user) {
-      return res.status(401).json({ message: "Unauthorized" });
-    }
-    req.login(user, (loginErr) => {
-      if (loginErr) {
-        return res
-          .status(500)
-          .json({ message: "Login failed", error: loginErr });
-      }
-      return res.status(200).json({ message: "Login successful" });
-    });
-  })(req, res, next);
-});
+// router.post('/login', (req, res) => {
+//   passport.authenticate('local', {
+//     successRedirect: '/',
+//     failureRedirect: '/login',
 
+//   });
+// });
+
+router.post("/login", async (req, res) => {
+  try {
+    // Find the user who matches the posted e-mail address
+    const userData = await User.findOne({ where: { email: req.body.email } });
+
+    if (!userData) {
+      res
+        .status(400)
+        .json({ message: "Incorrect email or password, please try again" });
+      return;
+    }
+
+    // Verify the posted password with the password store in the database
+    const validPassword = await userData.checkPassword(req.body.password);
+
+    if (!validPassword) {
+      res
+        .status(400)
+        .json({ message: "Incorrect email or password, please try again" });
+      return;
+    }
+
+    // Create session variables based on the logged in user
+    req.session.save(() => {
+      req.session.user_id = userData.id;
+      req.session.logged_in = true;
+
+      res.json({ user: userData, message: "You are now logged in!" });
+    });
+  } catch (err) {
+    res.status(400).json(err);
+  }
+});
 // Logout route
 router.get("/logout", (req, res) => {
   req.logout((err) => {

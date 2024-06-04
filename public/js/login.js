@@ -13,7 +13,7 @@ const loginFormHandler = async (event) => {
       });
 
       if (response.ok) {
-        document.location.replace("/homepage");
+        document.location.replace("/");
       } else {
         const result = await response.json();
         alert(`Failed to log in: ${result.message}`);

@@ -106,4 +106,41 @@ document.addEventListener("DOMContentLoaded", () => {
       triggerEvent("ajaxStop");
     }
   };
+
+  // Handle login form submission
+  // const loginFormHandler = async (event) => {
+  //     event.preventDefault();
+
+  //     const email = document.querySelector("#email").value.trim();
+  //     const password = document.querySelector("#password").value.trim();
+
+  //     if (email && password) {
+  //         try {
+  //             const response = await customFetch("/login", {
+  //                 method: "POST",
+  //                 body: JSON.stringify({ email, password }),
+  //                 headers: { "Content-Type": "application/json" },
+  //             });
+
+  //             if (response.ok) {
+  //                 document.location.replace("/");
+  //             } else {
+  //                 const errorData = await response.json();
+  //                 alert(`Failed to log in: ${errorData.message}`);
+  //             }
+  //         } catch (error) {
+  //             alert(`Login error: ${error.message}`);
+  //         }
+  //     }
+  // };
+
+  const loginForm = document.querySelector(".login-form");
+  if (loginForm) {
+    loginForm.addEventListener("submit", loginFormHandler);
+  }
+
+  const registerForm = document.querySelector(".register-form");
+  if (registerForm) {
+    registerForm.addEventListener("submit", registerFormHandler);
+  }
 });
