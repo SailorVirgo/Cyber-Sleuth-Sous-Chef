@@ -27,42 +27,43 @@ router.get("/", async (req, res) => {
 });
 
 
-router.post('/dashboard', async (req,res) => {
+router.get("/dashboard", async (req, res) => {
   try {
-    const userData = await User.findAll({
+    // Fetch user's data along with their associated recipes
+    const userData = await User.findAll(req.session.user_id, {
       attributes: { exclude: ["password"] },
       include: [{ model: Recipes }],
     });
 
-    const user = userData.map((user) => user.get({ plain: true }));
+    // if (!userData) {
+    //   return res.status(404).json({ message: "User not found" });
+    // }
 
-    res.render("dashboard", {
-      ...user,
-    });
+    // Extract user and recipes data
+    const user = userData.map((post) => post.get({ plain: true }));
+
+    // Render the dashboard template with user and recipes data
+    res.render("dashboard", { user, logged_in: req.session.logged_in });
   } catch (err) {
-      res.status(500).json(err);
+    console.error(err);
+    res.status(500).json({ message: "Internal server error" });
   }
 });
 
-// // Dashboard route
+// Dashboard route
 // router.get('/dashboard', async (req, res) => {
-//   // if (!req.session.logged_in) {
-//   //   return res.redirect('/login');
-//   // }
 //   try {
-//     const userData = await User.findAll(req.session.user_id, {
-//       attributes: { exclude: ['password'] },
-//       include: [{ model: Recipes }],
-//     });
+//     // Fetch recipes from the database
+//     const recipes = await Recipes.findAll({ where: { user_id: req.session.user_id } });
 
-//     const user = userData.get({ plain: true });
+//     // Map over the fetched recipes and convert them to plain objects
+//     const recipePosts = recipes.map((recipe) => recipe.get({ plain: true }));
 
-//     res.render('dashboard', {
-//       ...user,
-//       logged_in: req.session.logged_in,
-//     });
+//     // Render the dashboard template with recipes data
+//     res.render('dashboard', { recipes: recipePosts });
 //   } catch (err) {
-//     res.status(500).json(err);
+//     console.error(err);
+//     res.status(500).json({ message: 'Internal server error' });
 //   }
 // });
 

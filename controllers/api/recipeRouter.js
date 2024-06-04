@@ -62,6 +62,8 @@ router.get('/:id', async (req, res) => {
 
     res.render('recipe', {
       recipe,
+      
+
     });
   }catch(err) {
     res.status(500).json(err);
@@ -120,6 +122,7 @@ router.post('/create-recipe', async (req,res) => {
 // });
 
 // Update a recipe
+
 router.post("/update/:id", async (req, res) => {
   const { recipeId, rating } = req.body;
 
