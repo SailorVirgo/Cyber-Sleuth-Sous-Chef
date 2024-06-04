@@ -68,28 +68,27 @@ router.get("/:id", async (req, res) => {
   }
 });
 
-router.post('/create-recipe', async (req,res) => {
+router.post("/create-recipe", async (req, res) => {
   try {
-      const { name, description, instructions, has_nuts } = req.body;
+    const { name, description, instructions, has_nuts } = req.body;
 
-      // Grabbing the logged-in users ID from the session
-      const userId = req.session.user_id
+    // Grabbing the logged-in users ID from the session
+    const userId = req.session.user_id;
 
-      const newPost = await Recipes.create({
-          name,
-          description,
-          instructions,
-          has_nuts,
-          user_id: userId, // Associate the blog post with the logged-in user
-      });
+    const newPost = await Recipes.create({
+      name,
+      description,
+      instructions,
+      has_nuts,
+      user_id: userId, // Associate the blog post with the logged-in user
+    });
 
-      res.status(200).json(newPost);
+    res.status(200).json(newPost);
   } catch (err) {
-      console.error(err);
-      res.status(500).json({ message: 'Failed to create post' });
+    console.error(err);
+    res.status(500).json({ message: "Failed to create post" });
   }
 });
-
 
 // Create a new recipe
 // router.post("/create-recipes", (req, res) => {
@@ -134,6 +133,20 @@ router.post("/update/:id", async (req, res) => {
     }
   } catch (error) {
     res.status(500).json({ message: "Failed to update recipe", error });
+  }
+});
+
+// Delete a recipe
+router.delete("/:id", async (req, res) => {
+  try {
+    const result = await Recipes.destroy({ where: { id: req.params.id } });
+    if (result) {
+      res.status(200).json({ message: "Recipe deleted sucessfully" });
+    } else {
+      res.status(404).json({ message: "Recipe not found" });
+    }
+  } catch (err) {
+    res.status(500).json({ message: "Failed to delete recipe" });
   }
 });
 

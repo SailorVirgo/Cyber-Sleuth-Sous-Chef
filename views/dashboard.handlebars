@@ -1,57 +1,84 @@
 <main>
-    <div>
-        <h1>Welcome to your Dashboard!</h1>
-    </div>
-    <div>
-        <h4>Below are your created recipes.</h4>
-    </div>
-    <div>
-        <h2 id="welcomePosts">Your Blog Posts:</h2>
-        <ul class="recipes">
-            {{#each recipes}}
-            <div class="recipes" data-post-id="{{this.id}}">
-                <h3>{{this.name}}</h3>
-                <p>{{this.description}}</p>
-                <p>{{this.instructions}}</p>
-                <p>{{this.has_nuts}}</p>
-
-                <p>By: {{user.name}}</p>
-                <button class="updateBtn btn btn-primary" type="update">Update</button>
-                <button class="deleteBtn btn btn-primary" type="delete">Delete</button>
-            </div>
-            {{/each}}
-        </ul>
-        <div id="dashboardForm" class="col-md-6 text-center">
-            <form id="recipe-form">
-                <p id="commentP">Would you like to create a new post?</p>
-                <div class="form-group">
-                    <label for="recipe-title">Title:</label>
-                    <input class="form-input" type="text" id="recipe-title" name="title" required />
-                </div>
-                <div class="form-group">
-                    <label for="recipe-description">Description:</label>
-                    <input class="form-input" type="text" id="recipe-description" name="description" required />
-                </div>
-                <div class="form-group">
-                    <label for="recipe-instructions">Instructions:</label>
-                    <input class="form-input" type="text" id="recipe-instructions" name="instructions" required />
-                </div>
-                <div class="form-group">
-                    <label for="recipe-nuts">Does the recipe contain nuts?</label>
-                    <div>
-                        <label>
-                            <input type="radio" name="nuts" value="yes" required> Yes
-                        </label>
-                        <label>
-                            <input type="radio" name="nuts" value="no"> No
-                        </label>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <button class="btn btn-primary" type="submit">Submit</button>
-                </div>
-            </form>
+  <div>
+    <h1>Welcome to your Dashboard!</h1>
+    <button id="logout">Logout</button>
+  </div>
+  <div>
+    <h4>Below are your created recipes.</h4>
+  </div>
+  <div>
+    <h2 id="welcomePosts">Your Recipe Posts:</h2>
+    <ul class="recipes">
+      {{#each recipes}}
+        <div class="recipes" data-post-id="{{this.id}}">
+          <h3>{{this.name}}</h3>
+          <p>{{this.description}}</p>
+          <p>{{this.instructions}}</p>
+          <p>{{this.has_nuts}}</p>
+          <p>By: {{user.name}}</p>
+          <button
+            class="updateBtn btn btn-primary"
+            type="update"
+          >Update</button>
+          <button
+            class="deleteBtn btn btn-primary"
+            type="delete"
+          >Delete</button>
         </div>
+      {{/each}}
+    </ul>
+    <div id="dashboardForm" class="col-md-6 text-center">
+      <form id="recipe-form">
+        <p id="commentP">Would you like to create a new post?</p>
+        <div class="form-group">
+          <label for="recipe-title">Title:</label>
+          <input
+            class="form-input"
+            type="text"
+            id="recipe-title"
+            name="title"
+            required
+          />
+        </div>
+        <div class="form-group">
+          <label for="recipe-description">Description:</label>
+          <input
+            class="form-input"
+            type="text"
+            id="recipe-description"
+            name="description"
+            required
+          />
+        </div>
+        <div class="form-group">
+          <label for="recipe-instructions">Instructions:</label>
+          <input
+            class="form-input"
+            type="text"
+            id="recipe-instructions"
+            name="instructions"
+            required
+          />
+        </div>
+        <div class="form-group">
+          <label for="recipe-nuts">Does the recipe contain nuts?</label>
+          <div>
+            <label>
+              <input type="radio" name="nuts" value="yes" required />
+              Yes
+            </label>
+            <label>
+              <input type="radio" name="nuts" value="no" />
+              No
+            </label>
+          </div>
+        </div>
+        <div class="form-group">
+          <button class="btn btn-primary" type="submit">Submit</button>
+        </div>
+      </form>
     </div>
+  </div>
 </main>
 <script src="/js/post.js"></script>
+<script src="/js/logout.js"></script>

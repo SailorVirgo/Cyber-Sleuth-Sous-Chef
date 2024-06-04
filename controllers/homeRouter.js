@@ -26,45 +26,27 @@ router.get("/", async (req, res) => {
   }
 });
 
-
-router.post('/dashboard', async (req,res) => {
+// Dashboard route
+router.get("/dashboard", async (req, res) => {
+  if (!req.session.logged_in) {
+    return res.redirect("/login");
+  }
   try {
-    const userData = await User.findAll({
+    const userData = await User.findByPk(req.session.user_id, {
       attributes: { exclude: ["password"] },
       include: [{ model: Recipes }],
     });
 
-    const user = userData.map((user) => user.get({ plain: true }));
+    const user = userData.get({ plain: true });
 
     res.render("dashboard", {
       ...user,
+      logged_in: req.session.logged_in,
     });
   } catch (err) {
-      res.status(500).json(err);
+    res.status(500).json(err);
   }
 });
-
-// // Dashboard route
-// router.get('/dashboard', async (req, res) => {
-//   // if (!req.session.logged_in) {
-//   //   return res.redirect('/login');
-//   // }
-//   try {
-//     const userData = await User.findAll(req.session.user_id, {
-//       attributes: { exclude: ['password'] },
-//       include: [{ model: Recipes }],
-//     });
-
-//     const user = userData.get({ plain: true });
-
-//     res.render('dashboard', {
-//       ...user,
-//       logged_in: req.session.logged_in,
-//     });
-//   } catch (err) {
-//     res.status(500).json(err);
-//   }
-// });
 
 // Login route
 router.get("/login", (req, res) => {
@@ -73,18 +55,16 @@ router.get("/login", (req, res) => {
     res.redirect("/dashboard");
     return;
   }
-
   res.render("login");
 });
 
 // Register route
 router.get("/register", (req, res) => {
   // If the user is already logged in, redirect the request to the dashboard
-  // if (req.session.logged_in) {
-  //   res.redirect("/dashboard");
-  //   return;
-  // }
-
+  if (req.session.logged_in) {
+    res.redirect("/dashboard");
+    return;
+  }
   res.render("register");
 });
 
