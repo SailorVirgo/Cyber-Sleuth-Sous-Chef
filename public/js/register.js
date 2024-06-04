@@ -1,16 +1,17 @@
-const loginFormHandler = async (event) => {
+const registerFormHandler = async (event) => {
   event.preventDefault();
 
+  const name = document.querySelector("#username").value.trim();
   const email = document.querySelector("#email").value.trim();
   const password = document.querySelector("#password").value.trim();
 
-  console.log("Sending data:", { email, password }); // Log data before sending
+  console.log("Sending data:", { name, email, password }); // Log data before sending
 
-  if (email && password) {
+  if (name && email && password) {
     try {
-      const response = await fetch("/api/user/login", {
+      const response = await fetch("/api/user/register", {
         method: "POST",
-        body: JSON.stringify({ email, password }),
+        body: JSON.stringify({ name, email, password }),
         headers: { "Content-Type": "application/json" },
       });
 
@@ -18,7 +19,7 @@ const loginFormHandler = async (event) => {
         document.location.replace("/");
       } else {
         const result = await response.json();
-        alert(`Failed to log in: ${result.message}`);
+        alert(`Failed to register: ${result.message}`);
       }
     } catch (error) {
       console.error("Error during fetch:", error); // Log any fetch errors
@@ -29,5 +30,5 @@ const loginFormHandler = async (event) => {
 };
 
 document
-  .querySelector(".login-form")
-  .addEventListener("submit", loginFormHandler);
+  .querySelector(".register-form")
+  .addEventListener("submit", registerFormHandler);
