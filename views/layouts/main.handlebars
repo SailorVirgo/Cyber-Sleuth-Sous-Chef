@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -80,9 +81,22 @@
     </div>
   </div>
 
-<script>
 
-</script>
+      <h1>Recipe Book Application</h1>
+      <button class="nav-toggle">Toggle Navigation</button>
+      <nav>
+        <ul>
+          <li><a href="/">Home</a></li>
+          {{#if passport}}
+            <li><a href="/dashboard">Dashboard</a></li>
+            <li><a id="logout" href="#">Logout</a></li>
+          {{else}}
+            <li><a href="/login">Login</a></li>
+            <li><a href="/register">Register</a></li>
+          {{/if}}
+        </ul>
+      </nav>
+
     </header>
 
     <main>

@@ -68,36 +68,59 @@ router.get('/:id', async (req, res) => {
   }
 });
 
-// Create a new recipe
-router.post("/", (req, res) => {
-  upload(req, res, async (err) => {
-    if (err) {
-      return res
-        .status(400)
-        .json({ message: "File upload failed", error: err });
-    }
+router.post('/create-recipe', async (req,res) => {
+  try {
+      const { name, description, instructions, has_nuts } = req.body;
 
-    const { name, description, instructions, has_nuts } = req.body;
+      // Grabbing the logged-in users ID from the session
+      const userId = req.session.user_id
 
-    try {
-      await Recipes.create({
-        name,
-        description,
-        date_created: new Date(),
-        instructions: instructions.split("\n"),
-        has_nuts: has_nuts === "true",
-        user_id: req.user.id,
-        imagePath: req.file ? `/uploads/${req.file.filename}` : null,
+      const newPost = await Recipes.create({
+          name,
+          description,
+          instructions,
+          has_nuts,
+          user_id: userId, // Associate the blog post with the logged-in user
       });
-      res.status(201).json({ message: "Recipe created successfully" });
-    } catch (error) {
-      res.status(500).json({ message: "Failed to create recipe", error });
-    }
-  });
+
+      res.status(200).json(newPost);
+  } catch (err) {
+      console.error(err);
+      res.status(500).json({ message: 'Failed to create post' });
+  }
 });
 
+
+// Create a new recipe
+// router.post("/create-recipes", (req, res) => {
+//   upload(req, res, async (err) => {
+//     if (err) {
+//       return res
+//         .status(400)
+//         .json({ message: "File upload failed", error: err });
+//     }
+
+//     const { name, description, instructions, has_nuts } = req.body;
+
+//     try {
+//       await Recipes.create({
+//         name,
+//         description,
+//         date_created: new Date(),
+//         instructions: instructions.split("\n"),
+//         has_nuts: has_nuts === "true",
+//         user_id: req.user.id,
+//         imagePath: req.file ? `/uploads/${req.file.filename}` : null,
+//       });
+//       res.status(201).json({ message: "Recipe created successfully" });
+//     } catch (error) {
+//       res.status(500).json({ message: "Failed to create recipe", error });
+//     }
+//   });
+// });
+
 // Update a recipe
-router.post("/update", async (req, res) => {
+router.post("/update/:id", async (req, res) => {
   const { recipeId, rating } = req.body;
 
   try {
