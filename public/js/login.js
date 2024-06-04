@@ -4,8 +4,6 @@ const loginFormHandler = async (event) => {
   const email = document.querySelector("#email").value.trim();
   const password = document.querySelector("#password").value.trim();
 
-  console.log("Sending data:", { email, password }); // Log data before sending
-
   if (email && password) {
     try {
       const response = await fetch("/api/user/login", {
@@ -15,16 +13,16 @@ const loginFormHandler = async (event) => {
       });
 
       if (response.ok) {
-        document.location.replace("/homepage");
+        document.location.replace("/home");
       } else {
         const result = await response.json();
         alert(`Failed to log in: ${result.message}`);
       }
     } catch (error) {
-      console.error("Error during fetch:", error); // Log any fetch errors
+      console.error("Error during fetch:", error);
     }
   } else {
-    alert("All fields are required.");
+    alert("Please enter both email and password.");
   }
 };
 

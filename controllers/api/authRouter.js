@@ -1,5 +1,6 @@
 const express = require("express");
 const { User } = require("../../models");
+const passport = require("passport");
 const router = express.Router();
 
 // Register route
@@ -24,6 +25,11 @@ router.post("/register", async (req, res) => {
     console.error("Database error:", error); // Log the error details
     res.status(400).json({ message: "User registration failed", error });
   }
+});
+
+// Login route
+router.post("/login", passport.authenticate("local"), (req, res) => {
+  res.json({ message: "Login successful" });
 });
 
 // Logout route

@@ -1,16 +1,12 @@
-{{#extend "main"}}
-    {{#content "body"}}
-        <h2>{{recipe.title}}</h2>
-        <h3>Ingredients</h3>
-        <ul>
-            {{#each recipe.ingredients}}
-            <li>{{this}}</li>
-            {{/each}}
-        </ul>
-        
-        <h3>Instructions</h3>
-        <p>{{recipe.instructions}}</p>
-        
-        <a href="/">Back to Home</a>
-    {{/content}}
-{{/extend}}
+<h2>{{recipe.name}}</h2>
+<h3>Ingredients</h3>
+<ul>
+  {{#each recipe.ingredients}}
+    <li>{{name}}: {{amount}} - {{details}}</li>
+  {{/each}}
+</ul>
+
+<h3>Instructions</h3>
+<p>{{#each recipe.instructions}}{{this}}<br />{{/each}}</p>
+
+<a href="/">Back to Home</a>
