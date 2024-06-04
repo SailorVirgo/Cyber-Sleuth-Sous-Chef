@@ -10,43 +10,63 @@ router.post("/register", async (req, res) => {
   console.log("Received registration data:", req.body);
 
   try {
-    const user = await User.findOne({ where: { email } });
-    if (user) {
-      return res.status(400).json({ message: "User already exists" });
-    } else {
-      const newUser = await User.create({ name: username, email, password });
-      req.login(newUser, (err) => {
-        if (err) {
-          return res
-            .status(500)
-            .json({ message: "Registration successful, but login failed" });
-        }
-        req.session.save(() => {
-          req.session.user_id = newUser.id;
-          req.session.logged_in = true;
-          console.log("Session after registration:", req.session);
-          res
-            .status(200)
-            .json({ message: "Registration and login successful" });
-        });
-      });
-    }
+    const userData = await User.create(req.body);
+
+    req.session.save(() => {
+      req.session.user_id = userData.id;
+      req.session.logged_in = true;
+
+      res.json({ user: userData, message: "You are now logged in!" });
+    });
   } catch (error) {
     console.error("Database error:", error);
     res.status(400).json({ message: "User registration failed", error });
   }
 });
 
-// Login route
-router.post("/login", passport.authenticate("local"), (req, res) => {
-  req.session.save(() => {
-    req.session.user_id = req.user.id;
-    req.session.logged_in = true;
-    console.log("Session after login:", req.session);
-    res.json({ message: "Login successful" });
-  });
+router.post("/login", async (req, res) => {
+  try {
+    // Find the user who matches the posted e-mail address
+    const userData = await User.findOne({ where: { email: req.body.email } });
+
+    if (!userData) {
+      res
+        .status(400)
+        .json({ message: "Incorrect email or password, please try again" });
+      return;
+    }
+
+    // Verify the posted password with the password store in the database
+    const validPassword = await userData.checkPassword(req.body.password);
+
+    if (!validPassword) {
+      res
+        .status(400)
+        .json({ message: "Incorrect email or password, please try again" });
+      return;
+    }
+
+    // Create session variables based on the logged in user
+    req.session.save(() => {
+      req.session.user_id = userData.id;
+      req.session.logged_in = true;
+
+      res.json({ user: userData, message: "You are now logged in!" });
+    });
+  } catch (err) {
+    res.status(400).json(err);
+  }
 });
 
+router.post("/logout", (req, res) => {
+  if (req.session.logged_in) {
+    req.session.destroy(() => {
+      res.status(204).end();
+    });
+  } else {
+    res.status(404).end();
+  }
+});
 // Logout route
 router.post("/logout", (req, res) => {
   req.logout((err) => {

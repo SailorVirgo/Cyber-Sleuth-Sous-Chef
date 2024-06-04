@@ -1,7 +1,7 @@
 const express = require("express");
-const { Recipes, User } = require("../models");
+const { Recipes, User, Ingredients } = require("../models");
 const router = express.Router();
-
+const withauth = require("../utils/auth");
 // Home route
 router.get("/", async (req, res) => {
   try {
@@ -27,34 +27,44 @@ router.get("/", async (req, res) => {
   }
 });
 
-// Dashboard route
-router.get("/dashboard", async (req, res) => {
-  if (!req.session.logged_in) {
-    console.log("User is not logged in, redirecting to login page");
-    return res.redirect("/login");
-  }
-
+router.post("/dashboard", async (req, res) => {
   try {
-    console.log("Fetching user data for user ID:", req.session.user_id);
-
-    const userData = await User.findByPk(req.session.user_id, {
+    // Fetch user's data along with their associated recipes
+    const userData = await User.findAll(req.session.user_id, {
       attributes: { exclude: ["password"] },
       include: [{ model: Recipes }],
     });
 
-    if (!userData) {
-      console.error("No user found with ID:", req.session.user_id);
-      return res.status(404).json({ message: "User not found" });
-    }
+    // if (!userData) {
+    //   return res.status(404).json({ message: "User not found" });
+    // }
 
-    const user = userData.get({ plain: true });
+    // Extract user and recipes data
+    const user = userData.map((post) => post.get({ plain: true }));
+
+    // Render the dashboard template with user and recipes data
+    res.render("dashboard", { user, logged_in: req.session.logged_in });
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
+
+// Dashboard route
+
+router.get("/dashboard", withauth, async (req, res) => {
+  try {
+    const userData = await Recipes.findAll({
+      attributes: { exclude: ["password"] },
+      include: [{ model: Ingredients }],
+    });
+
+    const user = userData.map((user) => user.get({ plain: true }));
 
     res.render("dashboard", {
       ...user,
       logged_in: req.session.logged_in,
     });
   } catch (err) {
-    console.error("Error fetching dashboard data:", err);
     res.status(500).json(err);
   }
 });
@@ -70,10 +80,6 @@ router.get("/login", (req, res) => {
 
 // Register route
 router.get("/register", (req, res) => {
-  if (req.session.logged_in) {
-    res.redirect("/dashboard");
-    return;
-  }
   res.render("register");
 });
 

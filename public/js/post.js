@@ -10,7 +10,10 @@ document
     const instructions = document
       .querySelector("#recipe-instructions")
       .value.trim();
-    const hasNuts = document.querySelector('input[name="nuts"]:checked').value;
+    const hasNuts = document.querySelector('input[name="nuts"]:checked').value; // Get the selected value for nuts
+    const ingredients = document
+      .querySelector("#recipe-instructions")
+      .value.trim();
 
     if (name && description && instructions && hasNuts) {
       try {
@@ -21,6 +24,7 @@ document
             name,
             description,
             instructions,
+            ingredients,
             has_nuts: hasNuts,
           }),
         });

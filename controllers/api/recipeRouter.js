@@ -3,6 +3,7 @@ const multer = require("multer");
 const path = require("path");
 const { Recipes, Ingredients } = require("../../models");
 const router = express.Router();
+const withauth = require("../../utils/auth");
 
 // Set up multer storage
 const storage = multer.diskStorage({
@@ -50,8 +51,10 @@ router.get("/", async (req, res) => {
   }
 });
 
-// Get a specific recipe by ID
-router.get("/:id", async (req, res) => {
+router.get("/:id", withauth, async (req, res) => {
+  // find one category by its `id` value
+  // be sure to include its associated Products
+
   try {
     const recipeData = await Recipes.findByPk(req.params.id, {
       include: [{ model: Ingredients }],
@@ -66,6 +69,7 @@ router.get("/:id", async (req, res) => {
 
     res.render("recipe", {
       recipe,
+      logged_in: req.session.logged_in,
     });
   } catch (err) {
     res.status(500).json(err);
@@ -95,8 +99,9 @@ router.post("/create-recipe", async (req, res) => {
 });
 
 // Update a recipe
-router.put("/:id", async (req, res) => {
-  const { name, description, instructions, has_nuts } = req.body;
+
+router.post("/update/:id", async (req, res) => {
+  const { recipeId, rating } = req.body;
 
   try {
     const recipe = await Recipes.findByPk(req.params.id);
