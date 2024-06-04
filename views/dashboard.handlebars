@@ -6,16 +6,18 @@
     <h4>Below are your created recipes.</h4>
   </div>
   <div>
-    <h2 id="welcomePosts">Your Blog Posts:</h2>
+    <h2 id="welcomePosts">Your Recipe Posts:</h2>
     <ul class="recipes">
-      {{#each recipe}}
-
-        <div class="recipes" data-post-id="{{recipe.id}}">
-          <h3>{{recipe.name}}</h3>
-          <p>{{recipe.description}}</p>
-          <p>{{recipe.instructions}}</p>
-          <p>{{recipe.has_nuts}}</p>
-
+      {{#each recipes}}
+        <div class="recipes" data-post-id="{{this.id}}">
+          <h3>{{this.name}}</h3>
+          <p>{{this.description}}</p>
+          <p>{{this.instructions}}</p>
+          {{#if this.has_nuts}}
+            <p>Contains nuts</p>
+          {{else}}
+            <p>No nuts</p>
+          {{/if}}
           <p>By: {{user.name}}</p>
           <button
             class="updateBtn btn btn-primary"
@@ -66,8 +68,8 @@
           <input
             class="form-input"
             type="text"
-            id="recipe-Ingredients"
-            name="Ingredients"
+            id="recipe-ingredients"
+            name="ingredients"
             required
           />
         </div>

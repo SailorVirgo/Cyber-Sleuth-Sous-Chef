@@ -10,12 +10,12 @@ document
     const instructions = document
       .querySelector("#recipe-instructions")
       .value.trim();
-    const hasNuts = document.querySelector('input[name="nuts"]:checked').value; // Get the selected value for nuts
+    const hasNuts = document.querySelector('input[name="nuts"]:checked').value;
     const ingredients = document
-      .querySelector("#recipe-instructions")
+      .querySelector("#recipe-ingredients")
       .value.trim();
 
-    if (name && description && instructions && hasNuts) {
+    if (name && description && instructions && hasNuts && ingredients) {
       try {
         const response = await fetch("/api/recipe/create-recipe", {
           method: "POST",
@@ -32,22 +32,7 @@ document
         if (response.ok) {
           const newPost = await response.json();
           console.log("New post created:", newPost);
-
-          // Append new post to the DOM
-          const postList = document.querySelector(".recipes");
-          const postElement = document.createElement("div");
-          postElement.classList.add("recipes");
-          postElement.dataset.postId = newPost.id;
-          postElement.innerHTML = `
-            <h3>${newPost.name}</h3>
-            <p>${newPost.description}</p>
-            <p>${newPost.instructions}</p>
-            <p>${newPost.has_nuts ? "Contains nuts" : "No nuts"}</p>
-            <button class="updateBtn btn btn-primary" type="update">Update</button>
-            <button class="deleteBtn btn btn-primary" type="delete">Delete</button>
-          `;
-          postList.appendChild(postElement);
-          window.location.href = "/dashboard"; // Optionally redirect to the dashboard
+          window.location.href = "/dashboard";
         } else {
           console.error("Could not create post:", response.statusText);
         }
@@ -56,3 +41,56 @@ document
       }
     }
   });
+
+document.addEventListener("click", function (event) {
+  if (event.target.classList.contains("updateBtn")) {
+    const postElement = event.target.closest(".recipes");
+    const postId = postElement.dataset.postId;
+    const updatedTitle = prompt("Enter updated title:");
+    const updatedDescription = prompt("Enter updated description:");
+    const updatedInstructions = prompt("Enter updated instructions:");
+    const updatedHasNuts = prompt("Does it contain nuts? (yes/no)") === "yes";
+
+    fetch(`/api/recipe/${postId}`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        name: updatedTitle,
+        description: updatedDescription,
+        instructions: updatedInstructions,
+        has_nuts: updatedHasNuts,
+      }),
+    })
+      .then((response) => {
+        if (response.ok) {
+          console.log("Post updated successfully");
+          window.location.reload();
+        } else {
+          console.error("Error updating post");
+        }
+      })
+      .catch((error) => {
+        console.error("Error updating post:", error);
+      });
+  }
+
+  if (event.target.classList.contains("deleteBtn")) {
+    const postElement = event.target.closest(".recipes");
+    const postId = postElement.dataset.postId;
+
+    fetch(`/api/recipe/${postId}`, {
+      method: "DELETE",
+    })
+      .then((response) => {
+        if (response.ok) {
+          console.log("Post deleted successfully");
+          postElement.remove();
+        } else {
+          console.error("Error deleting post");
+        }
+      })
+      .catch((error) => {
+        console.error("Error deleting post:", error);
+      });
+  }
+});
