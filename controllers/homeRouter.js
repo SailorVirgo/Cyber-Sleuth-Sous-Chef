@@ -22,6 +22,7 @@ router.get("/", async (req, res) => {
       logged_in: req.session.logged_in,
     });
   } catch (err) {
+    console.error("Error fetching home route data:", err);
     res.status(500).json(err);
   }
 });
@@ -29,13 +30,22 @@ router.get("/", async (req, res) => {
 // Dashboard route
 router.get("/dashboard", async (req, res) => {
   if (!req.session.logged_in) {
+    console.log("User is not logged in, redirecting to login page");
     return res.redirect("/login");
   }
+
   try {
+    console.log("Fetching user data for user ID:", req.session.user_id);
+
     const userData = await User.findByPk(req.session.user_id, {
       attributes: { exclude: ["password"] },
       include: [{ model: Recipes }],
     });
+
+    if (!userData) {
+      console.error("No user found with ID:", req.session.user_id);
+      return res.status(404).json({ message: "User not found" });
+    }
 
     const user = userData.get({ plain: true });
 
@@ -44,13 +54,13 @@ router.get("/dashboard", async (req, res) => {
       logged_in: req.session.logged_in,
     });
   } catch (err) {
+    console.error("Error fetching dashboard data:", err);
     res.status(500).json(err);
   }
 });
 
 // Login route
 router.get("/login", (req, res) => {
-  // If the user is already logged in, redirect the request to the dashboard
   if (req.session.logged_in) {
     res.redirect("/dashboard");
     return;
@@ -60,7 +70,6 @@ router.get("/login", (req, res) => {
 
 // Register route
 router.get("/register", (req, res) => {
-  // If the user is already logged in, redirect the request to the dashboard
   if (req.session.logged_in) {
     res.redirect("/dashboard");
     return;

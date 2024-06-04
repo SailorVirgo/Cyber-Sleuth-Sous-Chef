@@ -41,7 +41,7 @@ function checkFileType(file, cb) {
 router.get("/", async (req, res) => {
   try {
     const recipes = await Recipes.findAll({
-      where: { user_id: req.user.id },
+      where: { user_id: req.session.user.id },
       include: [Ingredients],
     });
     res.json({ recipes });
@@ -50,13 +50,17 @@ router.get("/", async (req, res) => {
   }
 });
 
+// Get a specific recipe by ID
 router.get("/:id", async (req, res) => {
-  // find one category by its `id` value
-  // be sure to include its associated Products
   try {
     const recipeData = await Recipes.findByPk(req.params.id, {
       include: [{ model: Ingredients }],
     });
+
+    if (!recipeData) {
+      res.status(404).json({ message: "Recipe not found" });
+      return;
+    }
 
     const recipe = recipeData.get({ plain: true });
 
@@ -68,11 +72,10 @@ router.get("/:id", async (req, res) => {
   }
 });
 
+// Create a new recipe
 router.post("/create-recipe", async (req, res) => {
   try {
     const { name, description, instructions, has_nuts } = req.body;
-
-    // Grabbing the logged-in users ID from the session
     const userId = req.session.user_id;
 
     const newPost = await Recipes.create({
@@ -80,52 +83,28 @@ router.post("/create-recipe", async (req, res) => {
       description,
       instructions,
       has_nuts,
-      user_id: userId, // Associate the blog post with the logged-in user
+      user_id: userId,
     });
 
+    console.log("New post created:", newPost);
     res.status(200).json(newPost);
   } catch (err) {
-    console.error(err);
+    console.error("Failed to create post:", err);
     res.status(500).json({ message: "Failed to create post" });
   }
 });
 
-// Create a new recipe
-// router.post("/create-recipes", (req, res) => {
-//   upload(req, res, async (err) => {
-//     if (err) {
-//       return res
-//         .status(400)
-//         .json({ message: "File upload failed", error: err });
-//     }
-
-//     const { name, description, instructions, has_nuts } = req.body;
-
-//     try {
-//       await Recipes.create({
-//         name,
-//         description,
-//         date_created: new Date(),
-//         instructions: instructions.split("\n"),
-//         has_nuts: has_nuts === "true",
-//         user_id: req.user.id,
-//         imagePath: req.file ? `/uploads/${req.file.filename}` : null,
-//       });
-//       res.status(201).json({ message: "Recipe created successfully" });
-//     } catch (error) {
-//       res.status(500).json({ message: "Failed to create recipe", error });
-//     }
-//   });
-// });
-
 // Update a recipe
-router.post("/update/:id", async (req, res) => {
-  const { recipeId, rating } = req.body;
+router.put("/:id", async (req, res) => {
+  const { name, description, instructions, has_nuts } = req.body;
 
   try {
-    const recipe = await Recipes.findByPk(recipeId);
+    const recipe = await Recipes.findByPk(req.params.id);
     if (recipe) {
-      recipe.rating = rating;
+      recipe.name = name;
+      recipe.description = description;
+      recipe.instructions = instructions;
+      recipe.has_nuts = has_nuts === "true";
       await recipe.save();
       res.status(200).json({ message: "Recipe updated successfully" });
     } else {
@@ -141,7 +120,7 @@ router.delete("/:id", async (req, res) => {
   try {
     const result = await Recipes.destroy({ where: { id: req.params.id } });
     if (result) {
-      res.status(200).json({ message: "Recipe deleted sucessfully" });
+      res.status(200).json({ message: "Recipe deleted successfully" });
     } else {
       res.status(404).json({ message: "Recipe not found" });
     }
