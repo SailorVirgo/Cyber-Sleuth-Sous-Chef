@@ -1,7 +1,7 @@
 const express = require("express");
 const { Recipes, User, Ingredients } = require("../models");
 const router = express.Router();
-
+const withauth = require('../utils/auth')
 // Home route
 router.get("/", async (req, res) => {
   try {
@@ -45,10 +45,8 @@ router.post('/dashboard', async (req, res) => {
 });
 
 // Dashboard route
-router.get('/dashboard', async (req, res) => {
-  if (!logged_in) {
-    return res.redirect('/login');
-  }
+router.get('/dashboard', withauth,  async (req, res) => {
+  
   try {
     const userData = await Recipes.findAll({
       attributes: { exclude: ['password'] },
