@@ -1,7 +1,7 @@
 const express = require("express");
-const { Recipes, User } = require("../models");
+const { Recipes, User, Ingredients } = require("../models");
 const router = express.Router();
-
+const withauth = require('../utils/auth')
 // Home route
 router.get("/", async (req, res) => {
   try {
@@ -27,7 +27,8 @@ router.get("/", async (req, res) => {
 });
 
 
-router.get("/dashboard", async (req, res) => {
+router.post('/dashboard', async (req, res) => {
+
   try {
     // Fetch user's data along with their associated recipes
     const userData = await User.findAll(req.session.user_id, {
@@ -45,27 +46,33 @@ router.get("/dashboard", async (req, res) => {
     // Render the dashboard template with user and recipes data
     res.render("dashboard", { user, logged_in: req.session.logged_in });
   } catch (err) {
-    console.error(err);
-    res.status(500).json({ message: "Internal server error" });
+
+    res.status(500).json(err);
+
   }
 });
 
 // Dashboard route
-// router.get('/dashboard', async (req, res) => {
-//   try {
-//     // Fetch recipes from the database
-//     const recipes = await Recipes.findAll({ where: { user_id: req.session.user_id } });
 
-//     // Map over the fetched recipes and convert them to plain objects
-//     const recipePosts = recipes.map((recipe) => recipe.get({ plain: true }));
+router.get('/dashboard', withauth,  async (req, res) => {
+  
+  try {
+    const userData = await Recipes.findAll({
+      attributes: { exclude: ['password'] },
+      include: [{ model: Ingredients }],
+    });
 
-//     // Render the dashboard template with recipes data
-//     res.render('dashboard', { recipes: recipePosts });
-//   } catch (err) {
-//     console.error(err);
-//     res.status(500).json({ message: 'Internal server error' });
-//   }
-// });
+    const user = userData.map((user) => user.get({ plain: true }));
+
+    res.render('dashboard', {
+      ...user,
+      logged_in: req.session.logged_in,
+    });
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
+
 
 // Login route
 router.get("/login", (req, res) => {
@@ -80,11 +87,6 @@ router.get("/login", (req, res) => {
 
 // Register route
 router.get("/register", (req, res) => {
-  // If the user is already logged in, redirect the request to the dashboard
-  // if (req.session.logged_in) {
-  //   res.redirect("/dashboard");
-  //   return;
-  // }
 
   res.render("register");
 });
