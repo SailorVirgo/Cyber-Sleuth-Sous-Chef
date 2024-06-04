@@ -54,7 +54,7 @@ router.get("/", async (req, res) => {
 router.get('/:id', withauth, async (req, res) => {
   // find one category by its `id` value
   // be sure to include its associated Products
-  console.log('line 57',req.session);
+  
   try{
     const recipeData = await Recipes.findByPk(req.params.id, {
       include: [{model: Ingredients}],

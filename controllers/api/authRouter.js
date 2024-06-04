@@ -10,17 +10,14 @@ router.post("/register", async (req, res) => {
   console.log("Received registration data:", req.body);
 
   try {
-    const user = await User.findOne({ where: { email } });
-    console.log('line 13:', user);
-    if (user) {
-      return res.render('register');
-
-    } else {
       const userData = await User.create(req.body);
-      console.log('line 19:', userData);
-
-      res.render('/home') 
-    }
+      
+      req.session.save(() => {
+        req.session.user_id = userData.id;
+        req.session.logged_in = true;
+        
+        res.json({ user: userData, message: 'You are now logged in!' });
+      });
 
   } catch (error) {
     console.error("Database error:", error); // Log the error details
