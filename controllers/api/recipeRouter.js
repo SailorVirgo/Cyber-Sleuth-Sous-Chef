@@ -63,13 +63,28 @@ router.get("/:id", withAuth, async (req, res) => {
       return;
     }
 
+
     const recipe = recipeData.get({ plain: true });
 
+    req.session.save(() => {
+      // We set up a session variable to count the number of times we visit the homepage
+      if (req.session.countVisit) {
+        // If the 'countVisit' session variable already exists, increment it by 1
+        req.session.countVisit++;
+      } else {
+        // If the 'countVisit' session variable doesn't exist, set it to 1
+        req.session.countVisit = 1;
+      }
+      
     res.render("recipe", {
       recipe,
       logged_in: req.session.logged_in,
+      countVisit: req.session.countVisit,
+
     });
-  } catch (err) {
+  });
+  }catch(err) {
+
     res.status(500).json(err);
   }
 });
