@@ -63,8 +63,10 @@ router.get('/:id', withauth, async (req, res) => {
     const recipe = recipeData.get({plain: true})
 
     res.render('recipe', {
+
       recipe, 
       logged_in: req.session.logged_in,
+
     });
 
   }catch(err) {
@@ -124,6 +126,7 @@ router.post('/create-recipe', async (req,res) => {
 // });
 
 // Update a recipe
+
 router.post("/update/:id", async (req, res) => {
   const { recipeId, rating } = req.body;
 

@@ -28,23 +28,32 @@ router.get("/", async (req, res) => {
 
 
 router.post('/dashboard', async (req, res) => {
+
   try {
-    const userData = await User.findAll({
+    // Fetch user's data along with their associated recipes
+    const userData = await User.findAll(req.session.user_id, {
       attributes: { exclude: ["password"] },
       include: [{ model: Recipes }],
     });
 
-    const user = userData.map((user) => user.get({ plain: true }));
+    // if (!userData) {
+    //   return res.status(404).json({ message: "User not found" });
+    // }
 
-    res.render("dashboard", {
-      ...user,
-    });
+    // Extract user and recipes data
+    const user = userData.map((post) => post.get({ plain: true }));
+
+    // Render the dashboard template with user and recipes data
+    res.render("dashboard", { user, logged_in: req.session.logged_in });
   } catch (err) {
+
     res.status(500).json(err);
+
   }
 });
 
 // Dashboard route
+
 router.get('/dashboard', withauth,  async (req, res) => {
   
   try {
@@ -63,6 +72,7 @@ router.get('/dashboard', withauth,  async (req, res) => {
     res.status(500).json(err);
   }
 });
+
 
 // Login route
 router.get("/login", (req, res) => {

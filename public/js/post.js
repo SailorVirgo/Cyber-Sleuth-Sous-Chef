@@ -5,13 +5,14 @@ document.getElementById('recipe-form').addEventListener('submit', async (event) 
     const description = document.querySelector('#recipe-description').value.trim();
     const instructions = document.querySelector('#recipe-instructions').value.trim();
     const hasNuts = document.querySelector('input[name="nuts"]:checked').value; // Get the selected value for nuts
+    const ingredients = document.querySelector('#recipe-instructions').value.trim()
 
     if (name && description && instructions && hasNuts) {
         try {
             const response = await fetch('/api/recipe/create-recipe', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ name, description, instructions, has_nuts: hasNuts }),
+                body: JSON.stringify({ name, description, instructions, ingredients,has_nuts: hasNuts }),
             });
 
             if (response.ok) {
