@@ -1,33 +1,32 @@
-const loginFormHandler = async (event) => {
-  event.preventDefault();
+document.addEventListener("DOMContentLoaded", () => {
+  const loginFormHandler = async (event) => {
+    event.preventDefault();
 
-  const email = document.querySelector("#email").value.trim();
-  const password = document.querySelector("#password").value.trim();
+    const email = document.querySelector("#email-login").value.trim();
+    const password = document.querySelector("#password-login").value.trim();
 
-  console.log("Sending data:", { email, password }); // Log data before sending
+    if (email && password) {
+      try {
+        const response = await fetch("/api/user/login", {
+          method: "POST",
+          body: JSON.stringify({ email, password }),
+          headers: { "Content-Type": "application/json" },
+        });
 
-  if (email && password) {
-    try {
-      const response = await fetch("/api/user/login", {
-        method: "POST",
-        body: JSON.stringify({ email, password }),
-        headers: { "Content-Type": "application/json" },
-      });
-
-      if (response.ok) {
-        document.location.replace("/");
-      } else {
-        const result = await response.json();
-        alert(`Failed to log in: ${result.message}`);
+        if (response.ok) {
+          document.location.replace("/dashboard");
+        } else {
+          const errorData = await response.json();
+          alert(`Failed to log in: ${errorData.message}`);
+        }
+      } catch (error) {
+        alert(`Login error: ${error.message}`);
       }
-    } catch (error) {
-      console.error("Error during fetch:", error); // Log any fetch errors
     }
-  } else {
-    alert("All fields are required.");
-  }
-};
+  };
 
-document
-  .querySelector(".login-form")
-  .addEventListener("submit", loginFormHandler);
+  const loginForm = document.querySelector(".login-form");
+  if (loginForm) {
+    loginForm.addEventListener("submit", loginFormHandler);
+  }
+});

@@ -1,17 +1,202 @@
-/* Navbar styles */
-.navbar {
-    background-color: rgba(255, 255, 255, 0.8) !important; /* Semi-transparent background */
+/* General reset and base styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-/* Container for centering the buttons */
+body {
+  font-family: Arial, sans-serif;
+  line-height: 1.6;
+  background-color: #f4f4f4;
+  color: #333;
+  padding: 20px;
+}
+
+/* Header styles */
+header {
+  background: #333;
+  color: #fff;
+  padding: 20px 0;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+header h1 {
+  margin: 0;
+  font-size: 2.5em;
+}
+
+header nav {
+  margin-top: 10px;
+}
+
+header nav ul {
+  list-style: none;
+  padding: 0;
+}
+
+header nav ul li {
+  display: inline;
+  margin: 0 10px;
+}
+
+header nav ul li a {
+  color: #fff;
+  text-decoration: none;
+}
+
+/* Main content styles */
+main .container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+  background: #fff;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+main h2 {
+  margin-bottom: 20px;
+  text-align: center;
+  font-size: 2em;
+  color: #3498db;
+}
+
+.recipe-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+}
+
+.recipe-card {
+  background: #f9f9f9;
+  border: 1px solid #ddd;
+  padding: 20px;
+  width: 300px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.recipe-card h3 {
+  margin-top: 0;
+  font-size: 1.5em;
+  color: #3498db;
+}
+
+.recipe-card p {
+  margin: 10px 0;
+}
+
+/* Footer styles */
+footer {
+  text-align: center;
+  margin-top: 20px;
+  color: #777;
+}
+
+/* Notification styles */
+.notification {
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 5px;
+  color: #fff;
+}
+
+.notification.info {
+  background: #3498db;
+}
+
+.notification.success {
+  background: #2ecc71;
+}
+
+.notification.error {
+  background: #e74c3c;
+}
+
+/* Dark mode styles */
+body.dark-mode {
+  background-color: #333;
+  color: #fff;
+}
+
+body.dark-mode header {
+  background: #444;
+}
+
+body.dark-mode main {
+  background: #555;
+  color: #ddd;
+}
+
+body.dark-mode footer {
+  color: #bbb;
+}
+
+/* Media queries for responsiveness */
+@media (max-width: 768px) {
+  header h1 {
+    font-size: 2em;
+  }
+
+  .recipe-card {
+    width: 100%;
+    margin-bottom: 20px;
+  }
+
+  .nav-toggle {
+    display: block;
+    margin: 10px auto;
+    padding: 10px 20px;
+    background: #3498db;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+  }
+
+  nav ul {
+    display: none;
+    text-align: center;
+  }
+
+  nav.open ul {
+    display: block;
+  }
+
+  nav ul li {
+    display: block;
+    margin: 10px 0;
+  }
+}
+
+@media (max-width: 480px) {
+  header h1 {
+    font-size: 1.5em;
+  }
+
+  .recipe-card {
+    padding: 15px;
+  }
+
+  main {
+    padding: 10px;
+  }
+}
+/* Navbar styles 
+.navbar {
+    background-color: rgba(255, 255, 255, 0.8) !important; /* Semi-transparent background 
+}
+
+ Container for centering the buttons 
 .nav-buttons {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh; /* Full viewport height */
+    height: 100vh; /* Full viewport height 
 }
 
-/* Button styles */
+ Button styles 
 .nav-buttons a, .nav-buttons button {
     margin: 0 1em;
     padding: 0.5em 1em;
@@ -25,3 +210,4 @@
 .nav-buttons a:hover, .nav-buttons button:hover {
     background-color: rgba(0, 0, 0, 0.9);
 }
+*/
