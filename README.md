@@ -34,6 +34,8 @@ The Recipe Book Application is a full-stack web application that allows users to
 │   │   ├── recipeRouter.js
 │   ├── homeRouter.js
 │   ├── index.js
+├── db
+│   ├── schema.sql
 ├── models
 │   ├── index.js
 │   ├── Ingredients.js
@@ -43,10 +45,12 @@ The Recipe Book Application is a full-stack web application that allows users to
 │   ├── css
 │   │   ├── index.css
 │   │   ├── jass.css
+│   │   ├── styles.css
 │   ├── js
 │   │   ├── login.js
 │   │   ├── logout.js
 │   │   ├── main.js
+│   │   ├── post.js
 │   │   ├── register.js
 │   ├── uploads
 ├── seeds
@@ -54,15 +58,20 @@ The Recipe Book Application is a full-stack web application that allows users to
 │   ├── recipeSeedData.json
 │   ├── seeds.js
 │   ├── userSeedData.json
+├── utils
+│   ├── auth.js
+│   ├── helpers.js
 ├── views
 │   ├── layouts
 │   │   ├── main.handlebars
+│   ├── dashboard.handlebars
 │   ├── home.handlebars
 │   ├── login.handlebars
 │   ├── register.handlebars
 │   ├── recipe.handlebars
 ├── .env
 ├── package.json
+├── README.md
 ├── server.js
 ```
 
@@ -70,10 +79,10 @@ The Recipe Book Application is a full-stack web application that allows users to
 
 The application includes seed data to populate the database with initial information:
 
-ingredientSeedFile.json: Contains initial data for ingredients.
-recipeSeedData.json: Contains initial data for recipes.
-userSeedData.json: Contains initial data for users.
-seeds.js: Script to load the data from the JSON files into the database.
+**ingredientSeedFile.json**: Contains initial data for ingredients.
+**recipeSeedData.json**: Contains initial data for recipes.
+**userSeedData.json**: Contains initial data for users.
+**seeds.js**: Script to load the data from the JSON files into the database.
 
 ## Deployment
 
