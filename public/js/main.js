@@ -139,35 +139,6 @@ document.addEventListener("DOMContentLoaded", () => {
     loginForm.addEventListener("submit", loginFormHandler);
   }
 
-  // Handle registration form submission
-  const registerFormHandler = async (event) => {
-    event.preventDefault();
-
-    const username = document.querySelector("#username-register").value.trim();
-    const email = document.querySelector("#email-register").value.trim();
-    const password = document.querySelector("#password-register").value.trim();
-
-    if (username && email && password) {
-      try {
-        console.log("Sending data:", { username, email, password });
-        const response = await customFetch("/api/user/register", {
-          method: "POST",
-          body: JSON.stringify({ username, email, password }),
-          headers: { "Content-Type": "application/json" },
-        });
-
-        if (response.ok) {
-          document.location.replace("/");
-        } else {
-          const errorData = await response.json();
-          alert(`Failed to register: ${errorData.message}`);
-        }
-      } catch (error) {
-        alert(`Registration error: ${error.message}`);
-      }
-    }
-  };
-
   const registerForm = document.querySelector(".register-form");
   if (registerForm) {
     registerForm.addEventListener("submit", registerFormHandler);

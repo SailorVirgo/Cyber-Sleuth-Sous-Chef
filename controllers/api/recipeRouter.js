@@ -50,21 +50,18 @@ router.get("/", async (req, res) => {
   }
 });
 
-// Get a specific recipe by ID
 router.get("/:id", async (req, res) => {
+  // find one category by its `id` value
+  // be sure to include its associated Products
   try {
     const recipeData = await Recipes.findByPk(req.params.id, {
-      include: [Ingredients],
+      include: [{ model: Ingredients }],
     });
-    if (!recipeData) {
-      res.status(404).json({ message: "No recipe found with this id" });
-      return;
-    }
+
     const recipe = recipeData.get({ plain: true });
 
     res.render("recipe", {
       recipe,
-      logged_in: req.session.logged_in,
     });
   } catch (err) {
     res.status(500).json(err);
