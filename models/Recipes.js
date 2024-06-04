@@ -21,12 +21,12 @@ Recipes.init(
             allowNull: false,
         },
         date_created: {
-            type: DataTypes.STRING,
+            type: DataTypes.DATE,
             allowNull: false,
             defaultValue: DataTypes.NOW,
         },
         instructions: {
-            type: DataTypes.ARRAY(DataTypes.TEXT),
+            type: DataTypes.TEXT,
             allowNull: false,
         },
         has_nuts: {
