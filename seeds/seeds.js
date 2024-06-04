@@ -19,6 +19,9 @@ await Recipes.bulkCreate(recipeSeedData);
 for (const ingredient of ingredientSeedData){
     await Ingredients.create(ingredient);
 };
+
+process.exit(0);
+
 }
 
 seedUserDatabase();
