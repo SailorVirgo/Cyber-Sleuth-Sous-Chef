@@ -1,21 +1,21 @@
-const { Recipes, Ingredients } = require("../../models");
+const express = require("express");
 const multer = require("multer");
 const path = require("path");
+const { Recipes, Ingredients } = require("../../models");
+const router = express.Router();
 
 // Set up multer storage
-
 const storage = multer.diskStorage({
-  destination: "../../public/uploads/",
+  destination: path.join(__dirname, "../../public/uploads/"),
   filename: function (req, file, cb) {
     cb(
       null,
-      file.fieldname + "-" + Data.now() + path.extname(file.originalname)
+      file.fieldname + "-" + Date.now() + path.extname(file.originalname)
     );
   },
 });
 
 // Initialize upload variable
-
 const upload = multer({
   storage: storage,
   limits: { fileSize: 1000000 },
@@ -25,7 +25,6 @@ const upload = multer({
 }).single("recipeImage");
 
 // Check file type
-
 function checkFileType(file, cb) {
   const filetypes = /jpeg|jpg|png|gif/;
   const extname = filetypes.test(path.extname(file.originalname).toLowerCase());
@@ -38,7 +37,8 @@ function checkFileType(file, cb) {
   }
 }
 
-exports.getRecipes = async (req, res) => {
+// Get all recipes
+router.get("/", async (req, res) => {
   try {
     const recipes = await Recipes.findAll({
       where: { user_id: req.user.id },
@@ -48,9 +48,28 @@ exports.getRecipes = async (req, res) => {
   } catch (error) {
     res.status(500).json({ message: "Failed to retrieve recipes", error });
   }
-};
+});
 
-exports.createRecipe = (req, res) => {
+router.get('/:id', async (req, res) => {
+  // find one category by its `id` value
+  // be sure to include its associated Products
+  try{
+    const recipeData = await Recipes.findByPk(req.params.id, {
+      include: [{model: Ingredients}],
+    });
+
+    const recipe = recipeData.get({plain: true})
+
+    res.render('recipe', {
+      recipe,
+    });
+  }catch(err) {
+    res.status(500).json(err);
+  }
+});
+
+// Create a new recipe
+router.post("/", (req, res) => {
   upload(req, res, async (err) => {
     if (err) {
       return res
@@ -64,20 +83,21 @@ exports.createRecipe = (req, res) => {
       await Recipes.create({
         name,
         description,
-        date_created: new Data(),
-        instructions: instructions.slipt("\n"),
+        date_created: new Date(),
+        instructions: instructions.split("\n"),
         has_nuts: has_nuts === "true",
         user_id: req.user.id,
-        imagePath: req.file ? `/updoads/${req.file.filename}` : null,
+        imagePath: req.file ? `/uploads/${req.file.filename}` : null,
       });
-      res.status(201).json({ message: "Recipe created sucessfully" });
-    } catch {
+      res.status(201).json({ message: "Recipe created successfully" });
+    } catch (error) {
       res.status(500).json({ message: "Failed to create recipe", error });
     }
   });
-};
+});
 
-exports.updateRecipe = async (req, res) => {
+// Update a recipe
+router.post("/update", async (req, res) => {
   const { recipeId, rating } = req.body;
 
   try {
@@ -85,11 +105,13 @@ exports.updateRecipe = async (req, res) => {
     if (recipe) {
       recipe.rating = rating;
       await recipe.save();
-      res.status(200).json({ message: "Recipe updated sucessfully" });
+      res.status(200).json({ message: "Recipe updated successfully" });
     } else {
       res.status(404).json({ message: "Recipe not found" });
     }
   } catch (error) {
     res.status(500).json({ message: "Failed to update recipe", error });
   }
-};
+});
+
+module.exports = router;

@@ -1,28 +1,39 @@
-<!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    
-    <link rel="stylesheet" href="../css/index.css">
-    <link rel="stylesheet" href="../css/jass.css"> 
-</head>
-<body>
+  <head>
+    <meta charset="UTF-8" />
+    <title>{{title}}</title>
+    <link rel="stylesheet" href="/css/index.css" />
+    <link rel="stylesheet" href="/css/jass.css" />
+  </head>
+  <body data-logged-in="{{logged_in}}">
     <header>
-        <h1>Cyber Sleuths Sous-Cheif</h1>
-      
-
-
+      <h1>Recipe Book Application</h1>
+      <button class="nav-toggle">Toggle Navigation</button>
+      <nav>
+        <ul>
+          <li><a href="/">Home</a></li>
+          {{#if logged_in}}
+            <li><a href="/dashboard">Dashboard</a></li>
+            <li><a id="logout" href="#">Logout</a></li>
+          {{else}}
+            <li><a href="/login">Login</a></li>
+            <li><a href="/register">Register</a></li>
+          {{/if}}
+        </ul>
+      </nav>
     </header>
-    
+
     <main>
-        
-        {{{body}}}
+      {{{body}}}
     </main>
-    
+
     <footer>
-        <p>&copy; 2024 Recipe Website</p>
+      <p>&copy; 2024 Recipe Website</p>
     </footer>
-    
+
     <script src="/js/main.js"></script>
-</body>
+    {{#if logged_in}}
+      <script src="/js/logout.js"></script>
+    {{/if}}
+  </body>
 </html>
