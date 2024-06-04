@@ -32,16 +32,15 @@ router.get("/dashboard", async (req, res) => {
     return res.redirect("/login");
   }
   try {
-    const userData = await User.findByPk(req.session.user_id, {
+    const userData = await User.findAll({
       attributes: { exclude: ["password"] },
       include: [{ model: Recipes }],
     });
 
-    const user = userData.get({ plain: true });
+    const user = userData.map((user) => user.get({ plain: true }));
 
     res.render("dashboard", {
       ...user,
-      logged_in: req.session.logged_in,
     });
   } catch (err) {
     res.status(500).json(err);
