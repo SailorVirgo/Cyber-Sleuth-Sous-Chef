@@ -1,141 +1,92 @@
-# Recipe Book
+# Recipe Book Application
 
-The Recipe Book Application is a full-stack web application designed to allow users to create, manage, and share their favorite recipes. Users can register and log in to their accounts, view a list of recipes, add new recipes, and update existing ones. The aplication utilizes Node.js, Express, PostgreSQL, Sequelize ORM, and Handlebars.js for the front-end rendering. Passport.js is used for authentication.
+## Overview
 
-## Table of Contents
-
-- Installation
-- Usage
-- Features
-- Technologies Used
-- Project Scructure
-- Contributing
-- License
-
-## Installation
-
-Prerequisites
-
-- Node.js
-- PostgreSQL
-
-Steps
-
-1. Clone the repository
-
-```bash
-git clone https://github.com/SailorVirgo/Project-2.git
-cd recipe-book
-```
-
-2. Install dependencies
-
-```bash
-npm install
-```
-
-3. Set up the database
-
-- Create a PostgreSQL database named `recipe_db`.
-
-```bash
-CREATE DATABASE recipe_db;
-```
-
-- Update the `.env` file with your database credentials.
-
-```bash
-DB_NAME=recipes_db
-DB_USER=your_db_username
-DB_PASSWORD=your_db_password
-```
-
-4. Run the database
-
-```bash
-psql -U postgres
-\i schema.sql;
-```
-
-5. Seed the database
-
-```bash
-node seeeds/seeds.js
-```
-
-6. Start the application
-
-```bash
-npm start
-```
-
-The application should now be running on `http://localhost:3001`.
-
-## Usage
-
-- Navigate to `http://localhost:3001` to view the home page.
-- Register a new user account or log in with an existing account.
-- View, add, and update recipes.
+The Recipe Book Application is a full-stack web application that allows users to create, view, and manage their favorite recipes. Users can register, log in, upload images for their recipes, and share their culinary creations. The application is built using Node.js, Express.js, Handlebars.js, and PostgreSQL, and it is deployed on Render.
 
 ## Features
 
-- User authentication (register, log in, log out)
-- Add, view, and update recipes
-- Upload recipe images
-- Responsive and interactive UI
+- **User Authentication**: Users can register and log in to their accounts.
+- **Recipe Management**: Users can create, update, and delete recipes.
+- **Image Uploads**: Users can upload images for their recipes.
+- **View Recipes**: Users can view their own recipes and those shared by others.
+- **Responsive Design**: The application is designed to be responsive and user-friendly.
 
-# Technologies Used
+## Technologies Used
 
-- Node.js
-- Express.js
-- PostgreSQL
-- Sequilize ORM
-- Handlebars.js
-- Passport.js
-- Multer (for uploads)
-- dotenv ( for environment variables)
+- **Backend**: Node.js, Express.js, Sequelize ORM
+- **Frontend**: Handlebars.js
+- **Database**: PostgreSQL
+- **Authentication**: Passport.js
+- **Deployment**: Render
 
 ## Project Structure
 
 ```bash
-project-root/
-├── config/
-│   ├── connection.js             # Database connection settings
-│   └── passport.js               # Passport configuration
-├── controllers/
-│   ├── api/
-│   │   ├── authRoutes.js         # Authentication routes
-│   │   ├── recipeRoutes.js       # Recipe-related routes
-│   │   └── index.js              # Combines all API routes
-│   ├── homeRoutes.js             # Home and dashboard routes
-│   └── index.js                  # Main router
-├── models/
-│   ├── index.js                  # Model associations
-│   ├── ingredients.js            # Ingredient model
-│   ├── recipes.js                # Recipe model
-│   └── user.js                   # User model
-├── public/
-│   ├── css/                      # Stylesheets
-│   └── uploads/                  # Uploaded recipe images
-├── utils/
-│   ├── auth.js                   # Authentication utility functions
-│   └── helpers.js                # Helper functions
-├── views/
-│   ├── layouts/
-│   │   └── main.handlebars       # Main layout file
-│   ├── home.handlebars           # Home view
-│   ├── login.handlebars          # Login view
-│   ├── register.handlebars       # Registration view
-│   └── dashboard.handlebars      # Dashboard view
-├── .env                          # Environment variables
-├── server.js                     # Main application file
-└── package.json                  # Project metadata and dependencies
+.
+├── config
+│   ├── connections.js
+│   ├── passport.js
+├── controllers
+│   ├── api
+│   │   ├── authRouter.js
+│   │   ├── index.js
+│   │   ├── recipeRouter.js
+│   ├── homeRouter.js
+│   ├── index.js
+├── models
+│   ├── index.js
+│   ├── Ingredients.js
+│   ├── Recipes.js
+│   ├── User.js
+├── public
+│   ├── css
+│   │   ├── index.css
+│   │   ├── jass.css
+│   ├── js
+│   │   ├── login.js
+│   │   ├── logout.js
+│   │   ├── main.js
+│   │   ├── register.js
+│   ├── uploads
+├── seeds
+│   ├── ingredientSeedFile.json
+│   ├── recipeSeedData.json
+│   ├── seeds.js
+│   ├── userSeedData.json
+├── views
+│   ├── layouts
+│   │   ├── main.handlebars
+│   ├── home.handlebars
+│   ├── login.handlebars
+│   ├── register.handlebars
+│   ├── recipe.handlebars
+├── .env
+├── package.json
+├── server.js
 ```
 
-## Contributing
+## Seed Data
 
-Contributions are welcome! Please fork the repository and create a pull request with your changes.
+The application includes seed data to populate the database with initial information:
+
+ingredientSeedFile.json: Contains initial data for ingredients.
+recipeSeedData.json: Contains initial data for recipes.
+userSeedData.json: Contains initial data for users.
+seeds.js: Script to load the data from the JSON files into the database.
+
+## Deployment
+
+The Recipe Book Application is deployed on Render, ensuring it is always available and scalable to handle user traffic.
+
+## How to Use
+
+**Register an Account**: Create an account to start using the application.
+**Log In**: Log in with your credentials.
+**Create Recipes**: Add new recipes by providing details such as name, description, instructions, and an image.
+**View Recipes**: Browse through your recipes and those shared by other users.
+**Edit Recipes**: Update or delete your recipes as needed.
 
 ## License
 
-This project is licensed under MIT License.
+This project is licensed under the MIT License.

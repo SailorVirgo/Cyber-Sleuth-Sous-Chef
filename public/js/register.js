@@ -1,17 +1,17 @@
 const registerFormHandler = async (event) => {
   event.preventDefault();
 
-  const name = document.querySelector("#username").value.trim();
-  const email = document.querySelector("#email").value.trim();
-  const password = document.querySelector("#password").value.trim();
+  const username = document.querySelector("#username-register").value.trim();
+  const email = document.querySelector("#email-register").value.trim();
+  const password = document.querySelector("#password-register").value.trim();
 
-  console.log("Sending data:", { name, email, password }); // Log data before sending
+  console.log("Sending data:", { username, email, password }); // Log data before sending
 
-  if (name && email && password) {
+  if (username && email && password) {
     try {
       const response = await fetch("/api/user/register", {
         method: "POST",
-        body: JSON.stringify({ name, email, password }),
+        body: JSON.stringify({ username, email, password }),
         headers: { "Content-Type": "application/json" },
       });
 
@@ -29,6 +29,9 @@ const registerFormHandler = async (event) => {
   }
 };
 
-document
-  .querySelector(".register-form")
-  .addEventListener("submit", registerFormHandler);
+document.addEventListener("DOMContentLoaded", () => {
+  const registerForm = document.querySelector(".register-form");
+  if (registerForm) {
+    registerForm.addEventListener("submit", registerFormHandler);
+  }
+});

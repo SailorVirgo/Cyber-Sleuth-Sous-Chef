@@ -10,30 +10,26 @@ router.post("/register", async (req, res) => {
   console.log("Received registration data:", req.body);
 
   try {
-    const user = await User.findOne({ where: { email } });
-    console.log('line 13:', user);
-    if (user) {
-      return res.render('register');
-      
-    } else {
-      const userData = await User.create(req.body);
-      console.log('line 19:',userData);
-      
-      res.render('/home')
-      req.session.save;
+    const existingUser = await User.findOne({ where: { email } });
+    console.log("line 13:", existingUser);
+    if (existingUser) {
+      return res.status(400).json({ message: "Email already in use" });
     }
 
-    // const userData = await User.create({ name: username, email, password });
-    // req.login(userData, (err) => {
-    //   if (err) {
-    //     return res
-    //       .status(500)
-    //       .json({ message: "Registration successful, but login failed" });
-    //   }
-    //   return res
-    //     .status(200)
-    //     .json({ message: "Registration and login successful" });
-    // });
+    const newUser = await User.create({ name: username, email, password });
+    console.log("line 19:", newUser);
+
+    req.login(newUser, (err) => {
+      if (err) {
+        return res
+          .status(500)
+          .json({
+            message: "Registration successful, but login failed",
+            error: err,
+          });
+      }
+      res.status(200).json({ message: "Registration and login successful" });
+    });
   } catch (error) {
     console.error("Database error:", error); // Log the error details
     res.status(400).json({ message: "User registration failed", error });
@@ -41,8 +37,28 @@ router.post("/register", async (req, res) => {
 });
 
 // Login route
-router.post("/login", passport.authenticate("local"), (req, res) => {
-  res.json({ message: "Login successful" });
+router.post("/login", (req, res, next) => {
+  passport.authenticate("local", (err, user, info) => {
+    if (err) {
+      return res
+        .status(500)
+        .json({
+          message: "An error occurred during authentication",
+          error: err,
+        });
+    }
+    if (!user) {
+      return res.status(401).json({ message: "Unauthorized" });
+    }
+    req.login(user, (loginErr) => {
+      if (loginErr) {
+        return res
+          .status(500)
+          .json({ message: "Login failed", error: loginErr });
+      }
+      return res.status(200).json({ message: "Login successful" });
+    });
+  })(req, res, next);
 });
 
 // Logout route

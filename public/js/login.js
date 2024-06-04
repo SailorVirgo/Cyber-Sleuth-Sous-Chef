@@ -1,8 +1,8 @@
 const loginFormHandler = async (event) => {
   event.preventDefault();
 
-  const email = document.querySelector("#email").value.trim();
-  const password = document.querySelector("#password").value.trim();
+  const email = document.querySelector("#email-login").value.trim();
+  const password = document.querySelector("#password-login").value.trim();
 
   if (email && password) {
     try {
@@ -13,7 +13,7 @@ const loginFormHandler = async (event) => {
       });
 
       if (response.ok) {
-        document.location.replace("/home");
+        document.location.replace("/homepage");
       } else {
         const result = await response.json();
         alert(`Failed to log in: ${result.message}`);
@@ -26,6 +26,9 @@ const loginFormHandler = async (event) => {
   }
 };
 
-document
-  .querySelector(".login-form")
-  .addEventListener("submit", loginFormHandler);
+document.addEventListener("DOMContentLoaded", () => {
+  const loginForm = document.querySelector(".login-form");
+  if (loginForm) {
+    loginForm.addEventListener("submit", loginFormHandler);
+  }
+});
