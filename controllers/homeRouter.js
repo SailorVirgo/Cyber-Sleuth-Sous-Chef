@@ -1,7 +1,7 @@
 const express = require("express");
-const { Recipes, User } = require("../models");
+const { Recipes, User, Ingredients } = require("../models");
 const router = express.Router();
-
+const withauth = require('../utils/auth')
 // Home route
 router.get("/", async (req, res) => {
   try {
@@ -27,7 +27,7 @@ router.get("/", async (req, res) => {
 });
 
 
-router.post('/dashboard', async (req,res) => {
+router.post('/dashboard', async (req, res) => {
   try {
     const userData = await User.findAll({
       attributes: { exclude: ["password"] },
@@ -40,31 +40,29 @@ router.post('/dashboard', async (req,res) => {
       ...user,
     });
   } catch (err) {
-      res.status(500).json(err);
+    res.status(500).json(err);
   }
 });
 
-// // Dashboard route
-// router.get('/dashboard', async (req, res) => {
-//   // if (!req.session.logged_in) {
-//   //   return res.redirect('/login');
-//   // }
-//   try {
-//     const userData = await User.findAll(req.session.user_id, {
-//       attributes: { exclude: ['password'] },
-//       include: [{ model: Recipes }],
-//     });
+// Dashboard route
+router.get('/dashboard', withauth,  async (req, res) => {
+  
+  try {
+    const userData = await Recipes.findAll({
+      attributes: { exclude: ['password'] },
+      include: [{ model: Ingredients }],
+    });
 
-//     const user = userData.get({ plain: true });
+    const user = userData.map((user) => user.get({ plain: true }));
 
-//     res.render('dashboard', {
-//       ...user,
-//       logged_in: req.session.logged_in,
-//     });
-//   } catch (err) {
-//     res.status(500).json(err);
-//   }
-// });
+    res.render('dashboard', {
+      ...user,
+      logged_in: req.session.logged_in,
+    });
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
 
 // Login route
 router.get("/login", (req, res) => {
@@ -79,11 +77,6 @@ router.get("/login", (req, res) => {
 
 // Register route
 router.get("/register", (req, res) => {
-  // If the user is already logged in, redirect the request to the dashboard
-  // if (req.session.logged_in) {
-  //   res.redirect("/dashboard");
-  //   return;
-  // }
 
   res.render("register");
 });

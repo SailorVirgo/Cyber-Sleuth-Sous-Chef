@@ -8,12 +8,12 @@
     <div>
         <h2 id="welcomePosts">Your Blog Posts:</h2>
         <ul class="recipes">
-            {{#each recipes}}
-            <div class="recipes" data-post-id="{{this.id}}">
-                <h3>{{this.name}}</h3>
-                <p>{{this.description}}</p>
-                <p>{{this.instructions}}</p>
-                <p>{{this.has_nuts}}</p>
+            {{#each recipe}}
+            <div class="recipes" data-post-id="{{recipe.id}}">
+                <h3>{{recipe.name}}</h3>
+                <p>{{recipe.description}}</p>
+                <p>{{recipe.instructions}}</p>
+                <p>{{recipe.has_nuts}}</p>
 
                 <p>By: {{user.name}}</p>
                 <button class="updateBtn btn btn-primary" type="update">Update</button>
