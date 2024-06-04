@@ -1,18 +1,17 @@
 document.getElementById('recipe-form').addEventListener('submit', async (event) => {
     event.preventDefault();
 
-    const title = document.querySelector('#recipe-title').value.trim();
+    const name = document.querySelector('#recipe-title').value.trim();
     const description = document.querySelector('#recipe-description').value.trim();
     const instructions = document.querySelector('#recipe-instructions').value.trim();
     const hasNuts = document.querySelector('input[name="nuts"]:checked').value; // Get the selected value for nuts
 
-    if (title && description && hasNuts) {
-        console.log(title)
+    if (name && description && instructions && hasNuts) {
         try {
-            const response = await fetch('/api/posts/create-recipes', {
+            const response = await fetch('/api/recipe/create-recipe', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ title, description, hasNuts, instructions }),
+                body: JSON.stringify({ name, description, instructions, has_nuts: hasNuts }),
             });
 
             if (response.ok) {
@@ -45,6 +44,7 @@ document.addEventListener('click', function(event) {
         .then(response => {
             if (response.ok) {
                 console.log('Post updated successfully');
+                window.location.reload();
                 // Optionally update the post element in the UI with the new data
             } else {
                 console.error('Error updating post');
@@ -62,7 +62,7 @@ document.addEventListener('click', function(event) {
         const postId = postElement.dataset.postId;
         console.log('Post ID:', postId);
 
-        fetch(`/api/recipes/${postId}`, {
+        fetch(`/api/recipe/${postId}`, {
             method: 'DELETE',
         })
         .then(response => {
